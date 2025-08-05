@@ -1157,3 +1157,25 @@ window.handleAvailableSubbranches = function(steamID, faction, subbranches) {
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', tryInit);
+
+// Bridge initialization function
+function initializeApp() {
+    // Set up initial state from bridge
+    if (window.INITIAL_STATE_PLAYER) {
+        RANK_MANAGER_PERMISSIONS.setCurrentPlayer(window.INITIAL_STATE_PLAYER);
+    }
+    
+    if (window.INITIAL_STATE_PERMISSIONS) {
+        RANK_MANAGER_PERMISSIONS.permissions = window.INITIAL_STATE_PERMISSIONS;
+    }
+    
+    if (window.INITIAL_STATE_PLAYERS) {
+        RankManager.setState({ players: window.INITIAL_STATE_PLAYERS });
+        renderPlayerList();
+    }
+    
+    // Request player data from server
+    if (typeof rankmgr !== 'undefined') {
+        rankmgr.ready();
+    }
+}
